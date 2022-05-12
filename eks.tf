@@ -5,7 +5,7 @@ resource "aws_eks_cluster" "cluster" {
 
     vpc_config {
         security_group_ids = [aws_security_group.eks-master.id]
-        subnet_ids = aws_subnet.sn.*.id
+        subnet_ids = aws_subnet.pri_sn.*.id
     }
 
     depends_on = [
@@ -25,7 +25,7 @@ resource "aws_eks_fargate_profile" "kubesystem" {
     cluster_name = aws_eks_cluster.cluster.name
     fargate_profile_name = "kubesystem"
     pod_execution_role_arn = aws_iam_role.ekspodexecution.arn
-    subnet_ids = aws_subnet.sn.*.id
+    subnet_ids = aws_subnet.pri_sn.*.id
     selector {
         namespace = "for-performance-testspace"
     }
